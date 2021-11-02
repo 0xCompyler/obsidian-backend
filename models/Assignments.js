@@ -8,6 +8,10 @@ const assignmentsSchema = new schema({
         type: ObjectId,
         ref: "Teacher",
     },
+    course:{
+        type:String,
+        ref:"Courses"
+    },
     title: {
         type: String,
     },

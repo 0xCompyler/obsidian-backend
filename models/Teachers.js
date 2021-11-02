@@ -30,6 +30,10 @@ const teacherSchema = new schema({
         required: [true, "Please add a password"],
         min: [6, "Password should be of atleast 6 charachters"],
     },
+    course:{
+        type:String,
+        ref:"Courses"
+    },
     assignments: [
         {
             type: ObjectId,

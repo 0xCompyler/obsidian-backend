@@ -3,10 +3,43 @@ const asyncHandler = require("../middlewares/asyncHandler");
 const sendResponse = require("../utils/sendResponse");
 const Assignments = require("../models/Assignments");
 const Student = require("../models/Students");
+const Courses = require("../models/Course");
+
+//Initiate a course
+module.exports.initiateCourse = asyncHandler(async(req,res) => {
+
+    const {name,from,to,_id,handout,credits} = req.body;
+
+    const newCourse = new Courses({
+        courseOf:req.teacher._id,
+        _id,
+        name,
+        from,
+        to,
+        days:["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        handout,
+        credits
+    })
+
+    const savedCourse = await newCourse.save();
+
+    const updatedTeacher = await Teacher.findByIdAndUpdate({
+        _id:req.teacher._id
+    },{
+        $set:{
+            course:savedCourse._id
+        }
+    },{
+        new:true,
+        runValidators:true
+    }).populate("course")
+
+    sendResponse(updatedTeacher, "course initiated", res);
+})
 
 //Upload assignment
 module.exports.uploadAssignment = asyncHandler(async (req, res) => {
-    const { title, description, assignmentGiven, deadline } = req.body;
+    const { title, description, assignmentGiven, deadline,course } = req.body;
 
     const teacher = await Teacher.findById(req.teacher._id);
 
@@ -18,6 +51,7 @@ module.exports.uploadAssignment = asyncHandler(async (req, res) => {
         description,
         assignmentGiven,
         deadline,
+        course,
         uploadDate: Date.now(),
     });
 
@@ -38,7 +72,8 @@ module.exports.uploadAssignment = asyncHandler(async (req, res) => {
             runValidators: true,
             new: true,
         }
-    ).populate("assignments");
+    ).populate("assignments")
+    .populate("course");
 
     console.log(updatedTeacher, "savedTeacher");
 
