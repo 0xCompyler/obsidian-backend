@@ -1,5 +1,5 @@
 const asyncHandler = require("../middlewares/asyncHandler");
-const AttendanceService = require("../services/RegistrationService");
+const AttendanceService = require("../services/AttendanceService");
 
 module.exports.markAttendanceRequest = asyncHandler(async (req, res, next) => {
 	try {
@@ -17,7 +17,6 @@ module.exports.markAttendanceRequest = asyncHandler(async (req, res, next) => {
 			});
 		});
 		
-		console.log({ success: true, data: "Email sent" });
 	} catch (e) {
 		console.log(e);
 		res.status(500).json({

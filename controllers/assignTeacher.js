@@ -4,8 +4,12 @@ const sendResponse = require("../utils/sendResponse");
 const Assignments = require("../models/Assignments");
 const Student = require("../models/Students");
 const Courses = require("../models/Course");
+const path = require("path");
 
-//Initiate a course
+// @desc initiate course
+// @route POST /teacher/initiateCourse
+// @access Private
+
 module.exports.initiateCourse = asyncHandler(async(req,res) => {
 
     const {name,from,to,_id,handout,credits} = req.body;
@@ -37,7 +41,10 @@ module.exports.initiateCourse = asyncHandler(async(req,res) => {
     sendResponse(updatedTeacher, "course initiated", res);
 })
 
-//Upload assignment
+// @desc Upload assignment
+// @route POST /teacher/uploadAssignment
+// @access Private
+
 module.exports.uploadAssignment = asyncHandler(async (req, res) => {
     const { title, description, assignmentGiven, deadline,course } = req.body;
 
@@ -91,7 +98,10 @@ module.exports.uploadAssignment = asyncHandler(async (req, res) => {
     sendResponse(updatedTeacher, "assignment uploaded", res);
 });
 
-//Get all assignments of teachers and assignments submitted by students
+// @desc Teacher details
+// @route POST /teacher/getTeacher
+// @access Private
+
 module.exports.getTeacher = asyncHandler(async (req, res) => {
     const teacher = await Teacher.findById({
         _id: req.teacher._id,

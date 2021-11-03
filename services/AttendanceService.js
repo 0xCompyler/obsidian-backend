@@ -10,8 +10,6 @@ class AttendanceService {
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];
 
-    console.log(sheet,"sheet");
-
     await sheet.addRow({
       time: moment
         .tz('Asia/Kolkata')

@@ -4,6 +4,10 @@ const sendResponse = require("../utils/sendResponse");
 const Student = require("../models/Students");
 const Assignments = require("../models/Assignments");
 
+// @desc Submit Assignment
+// @route POST /student/submitAssignment
+// @access Private
+
 module.exports.submitAssignment = asyncHandler(async (req, res) => {
     const { assignment, assignmentId } = req.body;
 
@@ -31,6 +35,10 @@ module.exports.submitAssignment = asyncHandler(async (req, res) => {
 
     sendResponse(updatedAssignment, "uploaded work", res);
 });
+
+// @desc Student details
+// @route POST /student/getStudent
+// @access Private
 
 module.exports.getStudent = asyncHandler(async (req, res) => {
     const student = await Student.findById({
