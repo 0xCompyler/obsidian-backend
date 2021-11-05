@@ -39,6 +39,10 @@ const assignmentsSchema = new schema({
             dateSubmitted: {
                 type: Date,
             },
+            grade:{
+                type:Number,
+                default:0
+            }
         },
     ],
 });

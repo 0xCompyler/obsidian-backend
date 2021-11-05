@@ -117,3 +117,37 @@ module.exports.getTeacher = asyncHandler(async (req, res) => {
 
     sendResponse(teacher, "teacher data fetched successfully", res);
 });
+
+// @desc Grade Assignment
+// @route POST /teacher/gradeAssignment
+// @access Private
+
+module.exports.gradeAssignment = asyncHandler(async(req,res) => {
+    const {grade,assignmentId,studentId} = req.body;
+
+    const assignment = await Assignments.findById({
+        _id:assignmentId
+    })
+
+    const index = assignment.assignmentsSubmitted.findIndex((assignment) => {
+        console.log(assignment.givenBy,"givennn");
+        return assignment.givenBy.toString() === studentId.toString()
+    })
+
+    console.log(index,"index");
+ 
+    
+    const newData = {
+        ...assignment.assignmentsSubmitted[index],
+        grade:grade
+    }
+
+    assignment.assignmentsSubmitted[index] = newData;
+
+    console.log(assignment,"assignment");
+
+    const saveAssignment = await assignment.save();
+
+    sendResponse(saveAssignment,"Graded",res);
+
+})
