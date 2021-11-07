@@ -35,6 +35,19 @@ const studentSchema = new schema({
         type: String,
         default: "user",
     },
+    attendance:[
+        {
+            date:{
+                type:Date
+            },
+            course:{
+                type:String
+            },
+            status:{
+                type:String
+            }
+        }
+    ]
 });
 
 const Student = mongoose.model("Student", studentSchema);

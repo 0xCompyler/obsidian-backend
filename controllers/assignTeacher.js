@@ -46,7 +46,7 @@ module.exports.initiateCourse = asyncHandler(async(req,res) => {
 // @access Private
 
 module.exports.uploadAssignment = asyncHandler(async (req, res) => {
-    const { title, description, assignmentGiven, deadline,course } = req.body;
+    const { title, description, assignmentGiven, deadline,assignmentId } = req.body;
 
     const teacher = await Teacher.findById(req.teacher._id);
 
@@ -56,9 +56,10 @@ module.exports.uploadAssignment = asyncHandler(async (req, res) => {
         givenBy: req.teacher._id,
         title,
         description,
+        assignmentId,
         assignmentGiven,
         deadline,
-        course,
+        courseCode:teacher.course,
         uploadDate: Date.now(),
     });
 
@@ -135,7 +136,6 @@ module.exports.gradeAssignment = asyncHandler(async(req,res) => {
     })
 
     console.log(index,"index");
- 
     
     const newData = {
         ...assignment.assignmentsSubmitted[index],
