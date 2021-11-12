@@ -14,6 +14,7 @@ const assignStudent = require("./routes/assignStudent");
 const teacherAuth = require("./routes/teacherAuth");
 const assignTeacher = require("./routes/assignTeacher");
 const attendance = require("./routes/attendance");
+const courses = require("./routes/course");
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.use("/student", assignStudent);
 app.use("/teacher", teacherAuth);
 app.use("/teacher", assignTeacher);
 app.use("/attendance",attendance);
+app.use("/course",courses);
 
 app.use(errorHandler);
 
