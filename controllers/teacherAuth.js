@@ -45,7 +45,8 @@ module.exports.signin = asyncHandler(async (req, res, next) => {
     const secret = process.env.JWT_SECRET;
 
     //Checking if teacher has registered or not
-    const teacher = await Teacher.findOne({ email });
+    const teacher = await Teacher.findOne({ email })
+    .populate("assignments");
 
     if (!teacher) {
         return next(new ErrorResponse("Teacher is not registered", 400));
