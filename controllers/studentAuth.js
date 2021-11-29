@@ -81,3 +81,8 @@ module.exports.dashboard = asyncHandler(async (req, res) => {
     const student = await Student.findById(req.student._id);
     sendResponse(student, "Protected Page", res);
 });
+
+module.exports.getAllStudents = asyncHandler(async (req,res) => {
+    const students = await Student.find({});
+    sendResponse(students,"All Students",res);
+})

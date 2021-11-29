@@ -6,7 +6,8 @@ const colors = require("colors");
 const {
     signin,
     signup,
-    dashboard
+    dashboard,
+    getAllStudents
 } = require("../controllers/studentAuth")
 
 router.use((req,res,next) => {
@@ -19,5 +20,6 @@ router.use((req,res,next) => {
 router.post("/signup",signup);
 router.post("/signin",signin);
 router.get("/dashboard",requireLogin,dashboard);
+router.get("/allStudents",getAllStudents);
 
 module.exports = router;
