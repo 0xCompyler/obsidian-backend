@@ -5,6 +5,7 @@ const Assignments = require("../models/Assignments");
 const Student = require("../models/Students");
 const Courses = require("../models/Course");
 const path = require("path");
+const Exams = require("../models/Exams");
 
 // @desc initiate course
 // @route POST /teacher/initiateCourse
@@ -59,7 +60,7 @@ module.exports.uploadAssignment = asyncHandler(async (req, res) => {
         assignmentId,
         assignmentGiven,
         deadline,
-        courseCode:teacher.course,
+        // courseCode:teacher.course,
         uploadDate: Date.now(),
     });
 
@@ -81,7 +82,7 @@ module.exports.uploadAssignment = asyncHandler(async (req, res) => {
             new: true,
         }
     ).populate("assignments")
-    .populate("course");
+    // .populate("course");
 
     console.log(updatedTeacher, "savedTeacher");
 
@@ -98,6 +99,62 @@ module.exports.uploadAssignment = asyncHandler(async (req, res) => {
 
     sendResponse(updatedTeacher, "assignment uploaded", res);
 });
+
+// @desc Upload exam
+// @route POST /teacher/uploadExam
+// @access Private
+
+module.exports.uploadExam = asyncHandler(async (req, res) => {
+    const { title, description, examGiven, deadline,examId } = req.body;
+
+    const teacher = await Teacher.findById(req.teacher._id);
+
+    //Creating new exam
+
+    const newExam = new Exams({
+        givenBy: req.teacher._id,
+        title,
+        description,
+        examId,
+        examGiven,
+        deadline,
+        uploadDate: Date.now(),
+    });
+
+    const savedExam = await newExam.save();
+
+    console.log(savedExam, "saved exam");
+
+    const updatedTeacher = await Teacher.findByIdAndUpdate(
+        {
+            _id: teacher._id,
+        },
+        {
+            $push: {
+                assignments: savedExam._id,
+            },
+        },
+        {
+            runValidators: true,
+            new: true,
+        }
+    ).populate("assignments")
+    .populate("exams");
+
+
+    //Saving exams in each students document
+    const students = await Student.find({});
+
+    for (let i = 0; i < students.length; i++) {
+        students[i].exams.push(savedExam._id);
+
+        const savedStudent = await students[i].save();
+
+        console.log(savedStudent, "savedStudent");
+    }
+
+    sendResponse(updatedTeacher, "assignment uploaded", res);
+}); 
 
 // @desc Teacher details
 // @route POST /teacher/getTeacher
