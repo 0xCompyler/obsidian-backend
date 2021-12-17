@@ -31,6 +31,12 @@ const studentSchema = new schema({
             ref: "Assignments",
         },
     ],
+    exams:[
+        {
+            type:ObjectId,
+            ref:"Exams"
+        }
+    ],
     type: {
         type: String,
         default: "user",
