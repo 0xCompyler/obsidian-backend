@@ -8,9 +8,9 @@ const assignmentsSchema = new schema({
         type: ObjectId,
         ref: "Teacher",
     },
-    courseCode:{
-        type:String
-    },
+    // courseCode:{
+    //     type:String
+    // },
     assignmentId:{
         type:String
     },
@@ -29,6 +29,16 @@ const assignmentsSchema = new schema({
     deadline: {
         type: Date,
     },
+    keywords:[
+        {
+            type:String
+        }
+    ],
+    keywordsSummary:[
+        {
+            type:Object
+        }
+    ],
     assignmentsSubmitted: [
         {
             givenBy: {

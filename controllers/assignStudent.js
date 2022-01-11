@@ -12,6 +12,8 @@ const Exams = require("../models/Exams");
 module.exports.submitAssignment = asyncHandler(async (req, res) => {
     const { assignment, assignmentId } = req.body;
 
+    console.log(assignment,assignmentId,"assign");
+
     //Uploading work for a particular assignment
     const updatedAssignment = await Assignments.findByIdAndUpdate(
         {
