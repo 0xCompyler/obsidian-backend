@@ -6,6 +6,7 @@ const {
     initiateCourse,
     gradeAssignment,
     uploadExam,
+    getAssignmentDetails,
 } = require("../controllers/assignTeacher");
 const requireTeacherLogin = require("../middlewares/requireLoginTeacher");
 
@@ -14,5 +15,6 @@ router.get("/getTeacher", requireTeacherLogin, getTeacher);
 router.post("/initiateCourse",requireTeacherLogin,initiateCourse);
 router.post("/gradeAssignment",requireTeacherLogin,gradeAssignment);
 router.post("/uploadExam",requireTeacherLogin,uploadExam);
+router.post("/assignmentDetail",requireTeacherLogin,getAssignmentDetails);
 
 module.exports = router;

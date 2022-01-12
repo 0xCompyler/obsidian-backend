@@ -210,6 +210,7 @@ module.exports.gradeAssignment = asyncHandler(async(req,res) => {
 
 })
 
+
 //For fetching plagsummary
 module.exports.getAssignmentDetails = asyncHandler(async(req,res) => {
     const {assignmentId} = req.body;
