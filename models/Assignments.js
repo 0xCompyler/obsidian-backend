@@ -39,6 +39,11 @@ const assignmentsSchema = new schema({
             type:Object
         }
     ],
+    plagSummary:[
+        {
+            type:Object
+        }
+    ],
     assignmentsSubmitted: [
         {
             givenBy: {

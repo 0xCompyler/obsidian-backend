@@ -47,7 +47,7 @@ module.exports.initiateCourse = asyncHandler(async(req,res) => {
 // @access Private
 
 module.exports.uploadAssignment = asyncHandler(async (req, res) => {
-    const { title, description, assignmentGiven, deadline,assignmentId } = req.body;
+    const { title, description, assignmentGiven, deadline,assignmentId,keywords } = req.body;
 
     const teacher = await Teacher.findById(req.teacher._id);
 
@@ -62,6 +62,7 @@ module.exports.uploadAssignment = asyncHandler(async (req, res) => {
         deadline,
         // courseCode:teacher.course,
         uploadDate: Date.now(),
+        keywords
     });
 
     const saveAssignment = await newAssignment.save();
@@ -207,4 +208,15 @@ module.exports.gradeAssignment = asyncHandler(async(req,res) => {
 
     sendResponse(saveAssignment,"Graded",res);
 
+})
+
+//For fetching plagsummary
+module.exports.getAssignmentDetails = asyncHandler(async(req,res) => {
+    const {assignmentId} = req.body;
+    
+    const assignment = await Assignments.findOne({
+        assignmentId
+    })
+    
+    sendResponse(assignment,"Fetched assignment",res);
 })

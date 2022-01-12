@@ -49,7 +49,7 @@ const teacherSchema = new schema({
     type: {
         type: String,
         default: "teacher",
-    },
+    }
 });
 
 const Teacher = mongoose.model("Teacher", teacherSchema);
