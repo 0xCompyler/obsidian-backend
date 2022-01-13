@@ -169,6 +169,7 @@ module.exports.getTeacher = asyncHandler(async (req, res) => {
             path: "assignments",
             populate: {
                 path: "assignmentsSubmitted.givenBy",
+                path:"givenBy"
             },
         })
 
