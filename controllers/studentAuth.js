@@ -4,6 +4,7 @@ const asyncHandler = require("../middlewares/asyncHandler");
 const bcrypt = require("bcrypt");
 const sendResponse = require("../utils/sendResponse");
 const jwt = require("jsonwebtoken");
+const Assignments = require("../models/Assignments");
 
 // @desc register student
 // @route POST /signup
@@ -24,11 +25,20 @@ module.exports.signup = asyncHandler(async (req, res, next) => {
     //If not , then save the student
     const hashedPass = await bcrypt.hash(password, 10);
 
+    let assignments = [];
+
+    const savedAssignments = await Assignments.find({});
+
+    savedAssignments.map((assignment) => {
+        assignments.push(assignment._id);
+    });
+
     const newStudent = new Student({
         _id,
         name,
         email,
         password: hashedPass,
+        assignments
     });
 
     const savedStudent = await newStudent.save();
